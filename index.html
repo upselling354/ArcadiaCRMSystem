@@ -1,0 +1,2118 @@
+import React, { useState, useEffect, useMemo } from 'react';
+
+// Custom high-fidelity inline SVG icon suite designed for PropTech & Enterprise SaaS
+const Icons = {
+  Dashboard: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
+    </svg>
+  ),
+  Leads: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>
+  ),
+  Kanban: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+    </svg>
+  ),
+  WhatsApp: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+    </svg>
+  ),
+  Project: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+    </svg>
+  ),
+  Leaderboard: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+    </svg>
+  ),
+  Reports: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+  ),
+  Settings: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  ),
+  LogOut: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+    </svg>
+  ),
+  ArrowUpRight: (props) => (
+    <svg className={props.className || "w-4 h-4"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 19L19 5M19 5H8m11 0v11" />
+    </svg>
+  ),
+  ArrowDownLeft: (props) => (
+    <svg className={props.className || "w-4 h-4"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 5L5 19M5 19h11m-11 0V8" />
+    </svg>
+  ),
+  Search: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+  ),
+  Bell: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+    </svg>
+  ),
+  User: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+    </svg>
+  ),
+  Star: (props) => (
+    <svg className={props.className || "w-4 h-4"} fill="currentColor" viewBox="0 0 20 20">
+      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+    </svg>
+  ),
+  Check: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+  ),
+  ChevronDown: (props) => (
+    <svg className={props.className || "w-4 h-4"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  ),
+  Lock: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+    </svg>
+  ),
+  Share: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 10.742l4.636-2.318m0 0a3 3 0 102.243-4.077m-3.26 6.395A3 3 0 1215 18H9m6.316-2.742l-4.636-2.318" />
+    </svg>
+  ),
+  Brain: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+    </svg>
+  ),
+  Calendar: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  ),
+  Sparkles: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+    </svg>
+  ),
+  Plus: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+    </svg>
+  ),
+  Download: (props) => (
+    <svg className={props.className || "w-5 h-5"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    </svg>
+  )
+};
+
+// Inject Global High-Performance Modern Web Font Family to override standard system fonts
+const injectCustomFonts = () => {
+  if (typeof document !== 'undefined') {
+    const id = 'arcadia-google-font';
+    if (!document.getElementById(id)) {
+      const link = document.createElement('link');
+      link.id = id;
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap';
+      document.head.appendChild(link);
+    }
+  }
+};
+
+export default function App() {
+  useEffect(() => {
+    injectCustomFonts();
+  }, []);
+
+  // System States & Routing Control
+  const [theme, setTheme] = useState('dark'); // Default dark mode premium look as requested
+  const [currentRoute, setCurrentRoute] = useState('landing'); // 'landing', 'login', 'register', 'forgot', 'dashboard'
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [currentModule, setCurrentModule] = useState('overview'); // dashboard internal views
+  const [selectedLead, setSelectedLead] = useState(null); // Detail Lead Modal Trigger
+  const [toast, setToast] = useState(null); // Custom premium visual toast message
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterClassification, setFilterClassification] = useState('ALL'); // 'ALL', 'HOT', 'WARM', 'COLD'
+  const [currentUserRole, setCurrentUserRole] = useState('Super Admin'); // 'Super Admin', 'Manager', 'Sales', 'Marketing'
+
+  // Form states for adding new leads dynamically in the simulation
+  const [showAddLeadModal, setShowAddLeadModal] = useState(false);
+  const [newLeadForm, setNewLeadForm] = useState({
+    name: '', phone: '', source: 'Meta Ads', classification: 'WARM',
+    interest: 'Arcadia Gardenia Unit B12', price: 'Rp 850.000.000', sales: 'Yusuf Al-Farabi'
+  });
+
+  // Dynamic Simulator State
+  const [autoDistributionPercent, setAutoDistributionPercent] = useState(85);
+  const [rotatorWeights, setRotatorWeights] = useState([
+    { id: 1, name: 'Yusuf Al-Farabi (In-House 1)', weight: 40, activeLeads: 12 },
+    { id: 2, name: 'Siti Rahma (Agency Lead)', weight: 35, activeLeads: 19 },
+    { id: 3, name: 'Budi Santoso (Freelance Broker)', weight: 25, activeLeads: 8 }
+  ]);
+
+  // Unified Database Model for high fidelity CRUD & Pipeline changes in real-time
+  const [leadsDb, setLeadsDb] = useState([
+    {
+      id: "LE-9204",
+      name: "Prasetyo Utomo",
+      phone: "+62 812-4456-9901",
+      email: "prasetyo.u@gmail.com",
+      source: "Meta Ads (Instagram)",
+      classification: "HOT",
+      interest: "Arcadia Regency Premium - Kav 10",
+      price: "Rp 1.450.000.000",
+      stage: "Booking", // Stages: Lead, Survey, Booking, Akad, Closing
+      sales: "Yusuf Al-Farabi",
+      score: 94,
+      surveyDate: "2026-06-25",
+      notes: "Sangat tertarik dengan opsi pembiayaan syariah. Ingin survey lokasi hari Sabtu sore.",
+      activityTimeline: [
+        { time: "Hari ini, 09:30", type: "system", desc: "Lead terdistribusi otomatis via WhatsApp Rotator ke Yusuf Al-Farabi." },
+        { time: "Kemarin, 14:15", type: "score", desc: "Lead classification terupdate menjadi HOT berdasarkan interaksi WhatsApp Fast Response." },
+        { time: "2 hari lalu", type: "survey", desc: "Booking Survey Terjadwal untuk tanggal 25 Juni 2026." }
+      ]
+    },
+    {
+      id: "LE-9205",
+      name: "Dewi Citrawati",
+      phone: "+62 813-8890-2345",
+      email: "citra.dewi@outlook.com",
+      source: "TikTok Lead Form",
+      classification: "WARM",
+      interest: "Emerald Heights Villa - Blok B4",
+      price: "Rp 980.000.000",
+      stage: "Survey",
+      sales: "Siti Rahma",
+      score: 72,
+      surveyDate: "2026-06-22",
+      notes: "Sedang membandingkan dengan kompetitor di Serpong. Sangat menyukai desain layout modern scandinavian.",
+      activityTimeline: [
+        { time: "Hari ini, 10:15", type: "call", desc: "Follow up via telpon sukses. Menyetujui agenda survey lusa." },
+        { time: "3 hari lalu", type: "whatsapp", desc: "WhatsApp Blast Template 'Undangan Open House' terkirim." }
+      ]
+    },
+    {
+      id: "LE-9206",
+      name: "Rian Hidayat",
+      phone: "+62 878-1211-5544",
+      email: "rian.hidayat@yahoo.com",
+      source: "Google Search (SEO)",
+      classification: "HOT",
+      interest: "Arcadia Gardenia - Unit C05",
+      price: "Rp 750.000.000",
+      stage: "Akad",
+      sales: "Yusuf Al-Farabi",
+      score: 89,
+      surveyDate: "Selesai",
+      notes: "Dokumen KPR bank Syariah Mandiri sudah disetujui. Sedang koordinasi tanggal akad dengan notaris.",
+      activityTimeline: [
+        { time: "Kemarin, 16:45", type: "system", desc: "Status berpindah dari Booking ke Akad. Dokumen tervalidasi." },
+        { time: "1 minggu lalu", type: "payment", desc: "Uang muka sebesar Rp 10.000.000 terkonfirmasi masuk rekening developer." }
+      ]
+    },
+    {
+      id: "LE-9207",
+      name: "Hendrik Wijaya",
+      phone: "+62 811-9008-7711",
+      email: "hendrik.wijaya@corporate.co.id",
+      source: "Referral Agent",
+      classification: "HOT",
+      interest: "Arcadia Executive Penthouse",
+      price: "Rp 3.200.000.000",
+      stage: "Closing",
+      sales: "Budi Santoso",
+      score: 98,
+      surveyDate: "Selesai",
+      notes: "Skema pembayaran cash keras 3 termin. Pembayaran termin ke-3 diselesaikan kemarin sore.",
+      activityTimeline: [
+        { time: "Kemarin, 11:00", type: "system", desc: "closing sukses! Komisi sales ditransfer otomatis." },
+        { time: "1 minggu lalu", type: "document", desc: "Tanda tangan AJB (Akta Jual Beli) di hadapan PPAT." }
+      ]
+    },
+    {
+      id: "LE-9208",
+      name: "Amalia Siregar",
+      phone: "+62 812-7788-0099",
+      email: "amalia.srg@gmail.com",
+      source: "Meta Ads (Facebook)",
+      classification: "COLD",
+      interest: "Arcadia Gardenia - Unit A02",
+      price: "Rp 720.000.000",
+      stage: "Lead",
+      sales: "Siti Rahma",
+      score: 38,
+      surveyDate: "Belum Terjadwal",
+      notes: "Baru tanya-tanya brosur lewat iklan Facebook. Respon chat lambat dan irit menjawab.",
+      activityTimeline: [
+        { time: "2 hari lalu", type: "system", desc: "Sistem mencatat pendaftaran dari Campaign FB Ads: Arcadia Gardenia Promo Launching." }
+      ]
+    },
+    {
+      id: "LE-9209",
+      name: "dr. Andi Wijaksono",
+      phone: "+62 856-4321-9988",
+      email: "andi.wijaksono@rsud.go.id",
+      source: "WhatsApp Direct Link",
+      classification: "WARM",
+      interest: "Arcadia Regency Premium - Kav 12",
+      price: "Rp 1.450.000.000",
+      stage: "Survey",
+      sales: "Budi Santoso",
+      score: 65,
+      surveyDate: "2026-06-27",
+      notes: "Suka lokasi dekat pintu tol. Sedang mencocokkan jadwal praktek dokter untuk survey.",
+      activityTimeline: [
+        { time: "Hari ini, 08:00", type: "system", desc: "Automated Reminder WA terkirim otomatis untuk konfirmasi survey." }
+      ]
+    },
+    {
+      id: "LE-9210",
+      name: "Elizabeth S.",
+      phone: "+62 821-3322-1100",
+      email: "elizabeth.s@finance.net",
+      source: "Meta Ads (Instagram)",
+      classification: "HOT",
+      interest: "Emerald Heights Villa - Blok B2",
+      price: "Rp 980.000.000",
+      stage: "Booking",
+      sales: "Yusuf Al-Farabi",
+      score: 91,
+      surveyDate: "Selesai",
+      notes: "Sudah bayar UTJ (Uang Tanda Jadi) Rp 5.000.000 kemarin malam. Meminta penawaran custom kanopi.",
+      activityTimeline: [
+        { time: "Kemarin, 21:00", type: "payment", desc: "Penerimaan UTJ Rp 5.000.000 divalidasi oleh Keuangan." },
+        { time: "3 hari lalu", type: "survey", desc: "Kunjungan site survey selesai dengan kepuasan tinggi." }
+      ]
+    },
+    {
+      id: "LE-9211",
+      name: "Taufik Hidayat",
+      phone: "+62 819-0909-8877",
+      email: "taufik.h@indomedia.com",
+      source: "Spanduk / Banner Lokasi",
+      classification: "COLD",
+      interest: "Arcadia Gardenia - Unit C02",
+      price: "Rp 750.000.000",
+      stage: "Lead",
+      sales: "Siti Rahma",
+      score: 45,
+      surveyDate: "Belum Terjadwal",
+      notes: "Menghubungi nomor marketing dari spanduk di dekat jalan tol. Menunggu pengiriman brosur PDF.",
+      activityTimeline: [
+        { time: "3 hari lalu", type: "whatsapp", desc: "Kirim brosur Arcadia Gardenia PDF sukses via WA." }
+      ]
+    }
+  ]);
+
+  // Project Inventory Database
+  const [projects, setProjects] = useState([
+    { id: 1, name: 'Arcadia Regency Premium', location: 'Serpong, Tangerang', unitsSold: 42, totalUnits: 50, avgPrice: 'Rp 1.450.000.000' },
+    { id: 2, name: 'Emerald Heights Villa', location: 'Ciawi, Bogor', unitsSold: 18, totalUnits: 30, avgPrice: 'Rp 980.000.000' },
+    { id: 3, name: 'Arcadia Gardenia', location: 'Cibubur, Depok', unitsSold: 88, totalUnits: 120, avgPrice: 'Rp 750.000.000' },
+    { id: 4, name: 'Arcadia Executive Penthouse', location: 'Jakarta Selatan', unitsSold: 5, totalUnits: 8, avgPrice: 'Rp 3.200.000.000' }
+  ]);
+
+  // Custom visual feedback utility
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  // Drag and Drop (State-based simulated drop for quick interface feel)
+  const handleMoveStage = (leadId, newStage) => {
+    setLeadsDb(prevLeads => prevLeads.map(lead => {
+      if (lead.id === leadId) {
+        const stageActivity = {
+          time: "Baru saja",
+          type: "system",
+          desc: `Status stage dipindahkan ke ${newStage} via Pipeline Dashboard.`
+        };
+        return {
+          ...lead,
+          stage: newStage,
+          activityTimeline: [stageActivity, ...lead.activityTimeline]
+        };
+      }
+      return lead;
+    }));
+    showToast(`Lead ${leadId} dipindahkan ke tahap ${newStage}!`, 'success');
+  };
+
+  // Add dynamic logs to simulate auto lead ingestion & distribution from Ads / Webhooks
+  const handleSimulateNewLead = () => {
+    const names = ["Ratna Djuwita", "Ferry Salim", "Riza Wardana", "Maya Lestari"];
+    const phones = ["+62 812-3223-4455", "+62 856-9900-8877", "+62 877-4455-1100", "+62 811-1222-3333"];
+    const sources = ["Meta Ads (Instagram)", "TikTok Lead Form", "Google Search (SEO)", "WhatsApp Direct Link"];
+    const prices = ["Rp 750.000.000", "Rp 980.000.000", "Rp 1.450.000.000"];
+    const properties = ["Arcadia Gardenia - Unit B09", "Emerald Heights Villa - Blok D1", "Arcadia Regency Premium - Kav 05"];
+    
+    const randomIdx = Math.floor(Math.random() * names.length);
+    
+    // Auto Rotation allocation logic based on configured weights
+    const salesList = rotatorWeights.map(s => s.name);
+    const assignedSales = salesList[Math.floor(Math.random() * salesList.length)];
+    
+    const newId = `LE-` + Math.floor(1000 + Math.random() * 9000);
+    const generatedScore = Math.floor(40 + Math.random() * 58);
+    const generatedClassification = generatedScore > 80 ? 'HOT' : (generatedScore > 55 ? 'WARM' : 'COLD');
+
+    const createdLead = {
+      id: newId,
+      name: names[randomIdx],
+      phone: phones[randomIdx],
+      email: `${names[randomIdx].toLowerCase().replace(/\s+/g, '')}@gmail.com`,
+      source: sources[randomIdx],
+      classification: generatedClassification,
+      interest: properties[randomIdx],
+      price: prices[randomIdx],
+      stage: "Lead",
+      sales: assignedSales,
+      score: generatedScore,
+      surveyDate: "Belum Terjadwal",
+      notes: "Generated via Webhook Simulation. Siap diproses oleh sales rotator.",
+      activityTimeline: [
+        { time: "Baru Saja", type: "system", desc: `Auto assigned ke ${assignedSales} via WhatsApp Rotator.` }
+      ]
+    };
+
+    setLeadsDb(prev => [createdLead, ...prev]);
+    showToast(`Lead Baru Masuk! ${names[randomIdx]} terdistribusi otomatis ke ${assignedSales}`, 'success');
+  };
+
+  // WhatsApp simulation message trigger
+  const [waBlastTemplate, setWaBlastTemplate] = useState("Template 1: Sapaan Hangat & Brosur");
+  const handleSendBlast = () => {
+    showToast(`WhatsApp Blast Terkirim ke semua Leads dalam kategori ${filterClassification}!`, 'info');
+  };
+
+  // Custom Lead Insertion from form
+  const handleCreateLeadCustom = (e) => {
+    e.preventDefault();
+    if (!newLeadForm.name || !newLeadForm.phone) {
+      showToast("Nama dan Telepon wajib diisi!", "error");
+      return;
+    }
+    const newId = `LE-` + Math.floor(1000 + Math.random() * 9000);
+    const simulatedScore = Math.floor(35 + Math.random() * 60);
+    const createdLead = {
+      id: newId,
+      name: newLeadForm.name,
+      phone: newLeadForm.phone,
+      email: `${newLeadForm.name.toLowerCase().replace(/\s+/g, '')}@gmail.com`,
+      source: newLeadForm.source,
+      classification: newLeadForm.classification,
+      interest: newLeadForm.interest,
+      price: newLeadForm.price,
+      stage: "Lead",
+      sales: newLeadForm.sales,
+      score: simulatedScore,
+      surveyDate: "Belum Terjadwal",
+      notes: "Secara manual dimasukkan oleh sistem.",
+      activityTimeline: [
+        { time: "Sistem", type: "system", desc: "Lead ditambahkan secara manual oleh " + currentUserRole }
+      ]
+    };
+
+    setLeadsDb(prev => [createdLead, ...prev]);
+    setShowAddLeadModal(false);
+    showToast("Lead Baru berhasil ditambahkan ke database!", "success");
+    setNewLeadForm({
+      name: '', phone: '', source: 'Meta Ads', classification: 'WARM',
+      interest: 'Arcadia Gardenia Unit B12', price: 'Rp 850.000.000', sales: 'Yusuf Al-Farabi'
+    });
+  };
+
+  // Compute stats dynamically from stateful mock database
+  const totalLeads = leadsDb.length;
+  const hotLeadsCount = leadsDb.filter(l => l.classification === 'HOT').length;
+  const warmLeadsCount = leadsDb.filter(l => l.classification === 'WARM').length;
+  const coldLeadsCount = leadsDb.filter(l => l.classification === 'COLD').length;
+  const conversionRate = ((leadsDb.filter(l => l.stage === 'Closing').length / totalLeads) * 100).toFixed(1);
+
+  // Filter logic
+  const filteredLeads = useMemo(() => {
+    return leadsDb.filter(lead => {
+      const matchSearch = lead.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          lead.interest.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          lead.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          lead.sales.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchClass = filterClassification === 'ALL' || lead.classification === filterClassification;
+      return matchSearch && matchClass;
+    });
+  }, [leadsDb, searchTerm, filterClassification]);
+
+  // Export spreadsheet simulation
+  const triggerExcelExport = () => {
+    showToast("File Laporan Excel 'Arcadia_Leads_Database_2026.xlsx' sedang dibuat & didownload otomatis!", "success");
+  };
+
+  return (
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#0F172A] text-slate-100' : 'bg-slate-50 text-slate-800'} transition-colors duration-300 antialiased font-['Plus_Jakarta_Sans',sans-serif]`}>
+      
+      {/* Toast Alert System Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-[#1E293B] border border-[#0EA5E9] text-white p-4 rounded-xl shadow-2xl animate-bounce">
+          <div className="p-1 bg-[#0EA5E9]/10 rounded-lg text-[#0EA5E9]">
+            <Icons.Sparkles className="w-5 h-5 text-sky-400" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold">ARCADIA Real-Time System</p>
+            <p className="text-xs text-slate-300">{toast.message}</p>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================== */}
+      {/* 1. LANDING PAGE (Public View)             */}
+      {/* ========================================== */}
+      {currentRoute === 'landing' && (
+        <div>
+          {/* Header & Sticky Nav Bar */}
+          <header className="sticky top-0 z-40 backdrop-blur-md bg-slate-900/80 border-b border-slate-800 text-white py-4 px-6 md:px-12 flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-tr from-[#0EA5E9] to-[#14B8A6] rounded-xl flex items-center justify-center font-extrabold text-xl text-white shadow-lg">
+                A
+              </div>
+              <div>
+                <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">ARCADIA</span>
+                <span className="text-[10px] block text-sky-400 font-semibold tracking-widest leading-none">PROP-CRM</span>
+              </div>
+            </div>
+            
+            <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+              <a href="#features" className="hover:text-white transition">Fitur Unggulan</a>
+              <a href="#workflow" className="hover:text-white transition">Alur Kerja</a>
+              <a href="#testimonials" className="hover:text-white transition">Testimonial</a>
+              <a href="#pricing" className="hover:text-white transition">Harga Layanan</a>
+              <a href="#faq" className="hover:text-white transition">FAQ</a>
+            </nav>
+
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setCurrentRoute('login')} 
+                className="px-4 py-2 text-sm font-semibold hover:text-sky-400 transition"
+              >
+                Masuk
+              </button>
+              <button 
+                onClick={() => setCurrentRoute('register')} 
+                className="px-5 py-2.5 bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-600 hover:to-teal-600 rounded-xl text-sm font-bold shadow-lg shadow-sky-500/20 transition-all duration-300 hover:scale-105"
+              >
+                Mulai Free Trial
+              </button>
+            </div>
+          </header>
+
+          {/* Hero Section */}
+          <section className="relative overflow-hidden bg-slate-950 text-white pt-20 pb-28 px-6 md:px-12 flex flex-col items-center text-center">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-sky-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+            
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-500/10 border border-sky-500/30 rounded-full text-xs font-semibold text-sky-400 mb-6 uppercase tracking-wider">
+              <Icons.Sparkles className="w-4 h-4 text-sky-400" />
+              SaaS CRM Properti Terintegrasi #1 di Indonesia
+            </div>
+
+            <h1 className="max-w-4xl text-4xl md:text-6xl font-extrabold tracking-tight leading-tight md:leading-none mb-6">
+              Ubah Leads Properti Menjadi <span className="bg-gradient-to-r from-sky-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent">Akad & Closing</span> Dalam Satu Platform Terpusat
+            </h1>
+
+            <p className="max-w-2xl text-slate-300 md:text-lg mb-10 leading-relaxed">
+              Selamatkan sales pipeline Anda dari chat WhatsApp tercecer dan spreadsheet berantakan. Pantau leads secara presisi dari survey, booking, hingga akad dengan sistem rotator otomatis.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 w-full max-w-md">
+              <button 
+                onClick={() => setCurrentRoute('register')} 
+                className="w-full sm:w-auto px-8 py-4 bg-sky-500 hover:bg-sky-600 rounded-xl font-bold flex items-center justify-center gap-3 shadow-xl shadow-sky-500/20 transition-all duration-300 hover:scale-[1.02]"
+              >
+                Coba Demo Dashboard Gratis
+                <Icons.ArrowUpRight className="w-5 h-5" />
+              </button>
+              <a 
+                href="#features" 
+                className="w-full sm:w-auto px-8 py-4 bg-slate-900 border border-slate-800 hover:bg-slate-850 rounded-xl font-bold text-slate-300 block"
+              >
+                Pelajari Fitur
+              </a>
+            </div>
+
+            {/* Interactive Live Lead Distribution Simulator Widget */}
+            <div className="w-full max-w-5xl bg-[#1E293B]/70 border border-slate-800 rounded-2xl p-6 shadow-2xl backdrop-blur-md relative">
+              <div className="absolute top-3 left-4 flex gap-1.5">
+                <span className="w-3 h-3 bg-rose-500 rounded-full inline-block"></span>
+                <span className="w-3 h-3 bg-amber-500 rounded-full inline-block"></span>
+                <span className="w-3 h-3 bg-emerald-500 rounded-full inline-block"></span>
+              </div>
+              <div className="text-left mb-6 mt-2 border-b border-slate-800 pb-4 flex justify-between items-center">
+                <div>
+                  <h4 className="font-bold text-slate-100 flex items-center gap-2 text-sm md:text-base">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse inline-block"></span>
+                    ARCADIA LIVE SIMULATION CONSOLE
+                  </h4>
+                  <p className="text-xs text-slate-400">Gunakan simulator di bawah untuk melihat kemudahan auto-distribution leads secara instan.</p>
+                </div>
+                <button 
+                  onClick={handleSimulateNewLead}
+                  className="px-4 py-2 bg-gradient-to-r from-sky-500 to-teal-500 text-xs font-bold text-white rounded-lg flex items-center gap-2 hover:opacity-90"
+                >
+                  <Icons.Plus className="w-4 h-4" /> Simulasikan Leads Masuk
+                </button>
+              </div>
+
+              {/* Simulated Leads Dashboard Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-[#0F172A] p-4 rounded-xl border border-slate-800/80">
+                  <span className="text-xs text-slate-400 uppercase tracking-widest block mb-2 font-bold">Rotator Otomatis</span>
+                  <div className="space-y-2">
+                    {rotatorWeights.map(sales => (
+                      <div key={sales.id} className="p-2.5 bg-slate-900 rounded-lg border border-slate-800 text-xs flex justify-between items-center">
+                        <div>
+                          <span className="font-semibold block text-slate-200">{sales.name}</span>
+                          <span className="text-slate-400">Beban Rotasi: {sales.weight}%</span>
+                        </div>
+                        <span className="bg-[#0EA5E9]/15 text-[#0EA5E9] px-2 py-0.5 rounded-md font-bold">{sales.activeLeads} Leads</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-[#0F172A] p-4 rounded-xl border border-slate-800/80 md:col-span-2">
+                  <span className="text-xs text-slate-400 uppercase tracking-widest block mb-2 font-bold">Real-time Pipeline Feed ({leadsDb.length} Leads Terdaftar)</span>
+                  <div className="space-y-2 max-h-[160px] overflow-y-auto pr-1">
+                    {leadsDb.slice(0, 4).map(lead => (
+                      <div key={lead.id} className="p-2 bg-slate-900 rounded-lg border border-slate-800/60 text-xs flex justify-between items-center">
+                        <div className="flex items-center gap-2">
+                          <span className={`w-2.5 h-2.5 rounded-full ${lead.classification === 'HOT' ? 'bg-rose-500' : (lead.classification === 'WARM' ? 'bg-amber-500' : 'bg-slate-500')}`}></span>
+                          <div>
+                            <span className="font-bold text-slate-200">{lead.name}</span>
+                            <span className="text-[10px] text-slate-400 block">{lead.interest} • {lead.source}</span>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <span className="bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-bold text-[10px]">{lead.sales}</span>
+                          <span className="text-[10px] text-sky-400 block font-semibold">Stage: {lead.stage}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Feature Highlights Section */}
+          <section id="features" className="py-24 px-6 md:px-12 bg-slate-900 text-white">
+            <div className="max-w-6xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-extrabold mb-4">Solusi Menyeluruh Bisnis Properti Anda</h2>
+              <p className="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">Mulai dari akuisisi leads digital marketing hingga verifikasi akad lunas, Arcadia mendesain modul khusus yang dipahami mendalam oleh pengembang properti.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {[
+                { title: 'Dashboard Real-Time Executive', desc: 'Memonitor seluruh arus leads, survey lapangan, reservasi booking unit, hingga akad dalam satu layar eksekutif terpusat.', icon: Icons.Dashboard, accent: 'text-sky-400 bg-sky-500/10' },
+                { title: 'Sistem Rotator Otomatis WhatsApp', desc: 'Membagi secara instan leads dari Meta Ads/Google Form secara adil berbobot langsung ke WhatsApp CS Sales Marketing.', icon: Icons.WhatsApp, accent: 'text-teal-400 bg-teal-500/10' },
+                { title: 'AI-Based Lead Scoring & Class', desc: 'Teknologi cerdas memetakan secara real-time potensi leads (Cold, Warm, Hot) agar sales memprioritaskan yang pasti closing.', icon: Icons.Brain, accent: 'text-violet-400 bg-violet-500/10' },
+                { title: 'Drag-&-Drop Kanban Pipeline', desc: 'Visualisasikan progress penjualan layaknya Trello yang disesuaikan khusus untuk ritme proses penjualan real estate.', icon: Icons.Kanban, accent: 'text-amber-400 bg-amber-500/10' },
+                { title: 'Manajemen Stok Unit Properti', desc: 'Monitor ketersediaan kavling / apartemen secara digital, terupdate otomatis setiap kali ada sales yang melakukan booking.', icon: Icons.Project, accent: 'text-emerald-400 bg-emerald-500/10' },
+                { title: 'Pusat Analitik Kinerja Campaign', desc: 'Ketahui akurat modal campaign iklan yang mendatangkan closing terbanyak dari Meta Ads, TikTok, maupun spanduk fisik.', icon: Icons.Reports, accent: 'text-rose-400 bg-rose-500/10' },
+              ].map((fitur, i) => (
+                <div key={i} className="p-8 bg-slate-950/60 border border-slate-800 rounded-2xl hover:border-sky-500/40 transition-all duration-300 group hover:-translate-y-1">
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${fitur.accent}`}>
+                    <fitur.icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-sky-400 transition">{fitur.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">{fitur.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* How It Works Section */}
+          <section id="workflow" className="py-24 px-6 md:px-12 bg-slate-950 text-white relative">
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-transparent"></div>
+            <div className="max-w-5xl mx-auto relative z-10">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Bagaimana Arcadia Bekerja</h2>
+                <p className="text-slate-400 text-sm md:text-base">Hanya butuh 3 langkah instan untuk merevolusi efisiensi penjualan properti Anda.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[
+                  { step: '01', title: 'Hubungkan Akun Iklan', desc: 'Hubungkan Meta Ads, TikTok Lead, Google Sheets atau WhatsApp API dalam 2 klik mudah. Semua data langsung mengalir tanpa kendala.' },
+                  { step: '02', title: 'Atur Aturan Pembagian', desc: 'Tentukan sales mana yang berhak menerima leads. Sistem rotator akan mendistribusikan leads secara real-time langsung ke WhatsApp mereka.' },
+                  { step: '03', title: 'Pantau Perkembangan Closing', desc: 'Gunakan papan Kanban intuitif untuk melacak progres mulai dari survey lapangan, booking unit, hingga tanda tangan akad di hadapan notaris.' }
+                ].map((item, idx) => (
+                  <div key={idx} className="p-6 bg-slate-900 border border-slate-800 rounded-2xl relative">
+                    <span className="absolute top-4 right-4 text-5xl font-extrabold text-sky-500/10">{item.step}</span>
+                    <h4 className="text-xl font-bold mb-3 mt-4">{item.title}</h4>
+                    <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Testimonials Section */}
+          <section id="testimonials" className="py-24 px-6 md:px-12 bg-slate-900 text-white">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Dipercayai oleh Developer Properti Nasional</h2>
+                <p className="text-slate-400 text-sm md:text-base">Lebih dari 450+ developer properti, sales agency, dan broker independen mengandalkan Arcadia setiap hari.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[
+                  { name: "H. Ridwan Sanusi", role: "Direktur Utama", company: "PT Sanusi Realty Development", text: "Sebelum menggunakan Arcadia, leads kami bocor hingga 40% karena lambatnya tim sales melakukan follow-up. Sekarang, rotator otomatis membagikan leads kurang dari 3 detik!", rating: 5 },
+                  { name: "Siti Amelia", role: "Marketing Manager", company: "Pratama Group", text: "Fitur AI Lead Scoring sangat menghemat waktu. Sales kami sekarang fokus mengejar leads berlabel HOT, dan penjualan bulanan kami naik hingga 150%.", rating: 5 },
+                  { name: "Budi Kurniawan", role: "Founder & CEO", company: "Pilar Utama Estate", text: "Satu-satunya CRM properti yang benar-benar memahami alur kerja mulai dari survey lapangan, uang tanda jadi (UTJ), booking, hingga akad KPR di bank.", rating: 5 },
+                  { name: "Luthfi Hakim", role: "Sales Inhouse Lead", company: "Arcadia Regency", text: "Dashboard visualisasi yang sangat memanjakan mata. Saya bisa memantau sisa stok unit kosong dan memesan langsung saat bersama calon pembeli.", rating: 4 },
+                  { name: "Agustina Siregar", role: "Direktur Marketing", company: "Vivaland Group", text: "Laporan performa sales harian terupdate secara otomatis. Tidak ada lagi manipulasi laporan sales. Semua riwayat log terekam secara transparan.", rating: 5 },
+                  { name: "Yudi Purnomo", role: "Owner", company: "Nusantara Mini Developer", text: "Sistem WhatsApp Rotator sangat hebat! Leads terbagi secara proporsional sesuai target pencapaian masing-masing agen.", rating: 5 }
+                ].map((testi, idx) => (
+                  <div key={idx} className="p-6 bg-slate-950/80 border border-slate-800 rounded-xl">
+                    <div className="flex gap-1 text-amber-400 mb-4">
+                      {Array.from({ length: testi.rating }).map((_, i) => (
+                        <Icons.Star key={i} />
+                      ))}
+                    </div>
+                    <p className="text-slate-300 text-sm italic mb-6">"{testi.text}"</p>
+                    <div className="border-t border-slate-800 pt-4 flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-[#0EA5E9]">
+                        {testi.name[0]}
+                      </div>
+                      <div>
+                        <h5 className="font-bold text-sm text-slate-100">{testi.name}</h5>
+                        <p className="text-xs text-slate-400">{testi.role}, {testi.company}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Pricing Section */}
+          <section id="pricing" className="py-24 px-6 md:px-12 bg-slate-950 text-white">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Pilihan Paket Berlangganan</h2>
+                <p className="text-slate-400 text-sm md:text-base">Pilih paket terbaik untuk mempercepat laju pertumbuhan properti Anda.</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Free Plan */}
+                <div className="p-8 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col justify-between">
+                  <div>
+                    <h4 className="text-xl font-bold text-slate-200 mb-2">Starter (Free Trial)</h4>
+                    <p className="text-slate-400 text-sm mb-6">Cocok untuk broker independen yang ingin mencoba sistem integrasi dasar.</p>
+                    <div className="text-4xl font-extrabold text-white mb-6">$0 <span className="text-xs text-slate-400">/ selamanya</span></div>
+                    <ul className="space-y-3 text-sm text-slate-300 mb-8">
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> Max 2 Sales Account</li>
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> Max 50 Leads / bulan</li>
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> WhatsApp Direct Link Integrasi</li>
+                      <li className="text-slate-500 line-through flex items-center gap-2">AI-Lead Scoring & Rotator</li>
+                    </ul>
+                  </div>
+                  <button onClick={() => setCurrentRoute('register')} className="w-full py-3 bg-slate-800 hover:bg-slate-750 font-bold rounded-xl text-sm transition">
+                    Mulai Gratis
+                  </button>
+                </div>
+
+                {/* Pro Plan */}
+                <div className="p-8 bg-slate-900 border-2 border-sky-500 rounded-2xl relative flex flex-col justify-between transform lg:-translate-y-2 shadow-xl shadow-sky-500/10">
+                  <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-sky-500 to-teal-500 text-xs font-bold uppercase rounded-full">TERFAVORIT DEVELOPER</span>
+                  <div>
+                    <h4 className="text-xl font-bold text-slate-100 mb-2">Arcadia Pro</h4>
+                    <p className="text-slate-400 text-sm mb-6">Paling banyak digunakan oleh tim developer properti perumahan skala menengah.</p>
+                    <div className="text-4xl font-extrabold text-white mb-6">$29 <span className="text-xs text-slate-400">/ bulan</span></div>
+                    <ul className="space-y-3 text-sm text-slate-300 mb-8">
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> Unlimited Leads</li>
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> Max 15 Sales Account</li>
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> Auto WhatsApp Rotator</li>
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> AI-Lead Classification</li>
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> Integrasi Facebook & Meta Ads</li>
+                    </ul>
+                  </div>
+                  <button onClick={() => setCurrentRoute('register')} className="w-full py-3 bg-gradient-to-r from-sky-500 to-teal-500 font-bold rounded-xl text-sm transition shadow-lg shadow-sky-500/20">
+                    Langganan Sekarang
+                  </button>
+                </div>
+
+                {/* Enterprise Plan */}
+                <div className="p-8 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col justify-between">
+                  <div>
+                    <h4 className="text-xl font-bold text-slate-200 mb-2">Developer Enterprise</h4>
+                    <p className="text-slate-400 text-sm mb-6">Solusi premium terlengkap untuk manajemen multi-proyek berskala nasional.</p>
+                    <div className="text-4xl font-extrabold text-white mb-6">Custom <span className="text-xs text-slate-400">/ kontak kami</span></div>
+                    <ul className="space-y-3 text-sm text-slate-300 mb-8">
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> Custom Deployment (SaaS Dedicated)</li>
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> Unlimited Account & Projects</li>
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> Prioritas Tim Support 24/7</li>
+                      <li className="flex items-center gap-2"><Icons.Check className="w-4 h-4 text-emerald-400" /> API Custom Integrasi Core ERP</li>
+                    </ul>
+                  </div>
+                  <button onClick={() => setCurrentRoute('register')} className="w-full py-3 bg-slate-800 hover:bg-slate-750 font-bold rounded-xl text-sm transition">
+                    Hubungi Sales Executive
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ Accordion Section */}
+          <section id="faq" className="py-24 px-6 md:px-12 bg-slate-900 text-white">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl font-extrabold mb-4">Frequently Asked Questions</h2>
+                <p className="text-slate-400 text-sm">Temukan jawaban cepat atas pertanyaan mendasar mengenai penggunaan platform Arcadia.</p>
+              </div>
+
+              <div className="space-y-4">
+                {[
+                  { q: "Apakah Arcadia bisa menarik leads otomatis dari Iklan Instagram / Facebook?", a: "Ya, Arcadia terintegrasi langsung dengan Meta Ads Lead Instant Forms. Ketika calon pembeli mengirim form kontak, data langsung masuk ke CRM dan terbagi otomatis." },
+                  { q: "Bagaimana cara kerja WhatsApp Rotator di Arcadia?", a: "Anda bisa mendaftarkan nomor sales. Ketika leads masuk dari campaign digital, sistem secara cerdas langsung mengarahkan link chat WhatsApp kustom ke sales bertugas sesuai dengan beban persentase pembagian." },
+                  { q: "Apakah ada aplikasi mobile untuk tim sales?", a: "Dashboard Arcadia sepenuhnya dioptimalkan dan responsif untuk mobile web browser. Sales Anda bisa membuka pipeline, membuat survey report, dan menghubungi prospek langsung dari handphone." },
+                  { q: "Apa kegunaan AI Lead Scoring?", a: "Fitur ini menganalisis profil leads, sumber campaign, kecepatan membalas chat, serta minat produk untuk memprediksi seberapa besar peluang leads tersebut berlanjut ke tahap booking dan akad lunas." },
+                  { q: "Apakah data pelanggan kami aman di dalam platform?", a: "Keamanan data adalah prioritas utama kami. Semua transmisi data diamankan dengan enkripsi SSL 256-bit kelas perbankan dan infrastruktur komputasi awan yang andal." },
+                  { q: "Apakah kami bisa mengimpor database excel lama kami?", a: "Tentu saja. Anda bisa mengimpor ribuan database leads lama berformat CSV/Excel secara langsung ke dalam sistem database Arcadia." },
+                  { q: "Bagaimana cara melakukan survey lokasi lewat platform?", a: "Sales bisa mendaftarkan jadwal kunjungan survey. Agenda akan terintegrasi ke dalam kalender bersama sehingga manajemen bisa memantau jadwal harian sales." },
+                  { q: "Apakah ada biaya tersembunyi?", a: "Sama sekali tidak. Anda hanya membayar biaya langganan bulanan atau tahunan sesuai dengan paket yang dipilih tanpa tambahan komisi dari penjualan unit properti Anda." }
+                ].map((faq, idx) => (
+                  <div key={idx} className="p-5 bg-slate-950/80 rounded-xl border border-slate-800">
+                    <h5 className="font-bold text-slate-100 mb-2 flex items-center justify-between text-sm md:text-base">
+                      {faq.q}
+                    </h5>
+                    <p className="text-xs md:text-sm text-slate-400 leading-relaxed">{faq.a}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="bg-slate-950 text-slate-400 py-16 px-6 md:px-12 border-t border-slate-800">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div className="md:col-span-2">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-gradient-to-tr from-[#0EA5E9] to-[#14B8A6] rounded-xl flex items-center justify-center font-extrabold text-xl text-white">
+                    A
+                  </div>
+                  <span className="font-extrabold text-xl text-white tracking-tight">ARCADIA CRM</span>
+                </div>
+                <p className="text-slate-400 text-sm max-w-sm mb-6 leading-relaxed">
+                  Platform teknologi SaaS proptech terdepan yang dirancang khusus untuk memacu produktivitas penjualan developer real estate di Indonesia.
+                </p>
+                <div className="flex gap-4">
+                  <span className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 inline-block"></span>
+                  <span className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 inline-block"></span>
+                  <span className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 inline-block"></span>
+                </div>
+              </div>
+
+              <div>
+                <h6 className="text-white font-bold mb-4 uppercase tracking-widest text-xs">Menu Navigasi</h6>
+                <ul className="space-y-2 text-sm">
+                  <li><a href="#features" className="hover:text-white transition">Fitur Utama</a></li>
+                  <li><a href="#workflow" className="hover:text-white transition">Alur Kerja</a></li>
+                  <li><a href="#pricing" className="hover:text-white transition">Daftar Harga</a></li>
+                  <li><a href="#faq" className="hover:text-white transition">FAQ Hub</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <h6 className="text-white font-bold mb-4 uppercase tracking-widest text-xs">Langganan Newsletter</h6>
+                <p className="text-xs text-slate-400 mb-4">Dapatkan tips strategi digital marketing properti gratis setiap pekan.</p>
+                <div className="flex gap-2">
+                  <input type="email" placeholder="Email Anda" className="bg-slate-900 text-xs px-3 py-2.5 rounded-lg border border-slate-800 w-full focus:outline-none focus:border-sky-500" />
+                  <button onClick={() => showToast("Terima kasih sudah berlangganan newsletter!", "success")} className="px-3 bg-sky-500 hover:bg-sky-600 text-white rounded-lg text-xs font-bold">Kirim</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="max-w-6xl mx-auto border-t border-slate-900 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs">
+              <p>© 2026 PT Arcadia Sistem Solusindo. Hak Cipta Dilindungi.</p>
+              <div className="flex gap-6 mt-4 md:mt-0">
+                <a href="#" className="hover:text-white">Syarat & Ketentuan</a>
+                <a href="#" className="hover:text-white">Kebijakan Privasi</a>
+              </div>
+            </div>
+          </footer>
+        </div>
+      )}
+
+
+      {/* ========================================== */}
+      {/* 2. AUTHENTICATION PAGES                     */}
+      {/* ========================================== */}
+      {currentRoute === 'login' && (
+        <div className="min-h-screen flex items-center justify-center p-6 bg-slate-950 relative overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-sky-500/5 blur-[100px] rounded-full"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-teal-500/5 blur-[100px] rounded-full"></div>
+
+          <div className="w-full max-w-md bg-slate-900/80 border border-slate-800 p-8 rounded-2xl shadow-2xl backdrop-blur-md relative z-10">
+            <div className="flex flex-col items-center mb-8">
+              <div onClick={() => setCurrentRoute('landing')} className="cursor-pointer w-12 h-12 bg-gradient-to-tr from-[#0EA5E9] to-[#14B8A6] rounded-xl flex items-center justify-center font-extrabold text-2xl text-white mb-3">
+                A
+              </div>
+              <h3 className="text-2xl font-bold text-white">Selamat Datang Kembali</h3>
+              <p className="text-slate-400 text-xs text-center mt-1">Silakan masuk menggunakan kredensial akun terdaftar Anda.</p>
+            </div>
+
+            <form onSubmit={(e) => { e.preventDefault(); setCurrentRoute('dashboard'); showToast("Login Sukses sebagai Super Admin!", "success"); }} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Alamat Email</label>
+                <input required type="email" placeholder="example@developer.com" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-sky-500" />
+              </div>
+
+              <div>
+                <div className="flex justify-between mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">Kata Sandi</label>
+                  <button type="button" onClick={() => setCurrentRoute('forgot')} className="text-xs text-sky-400 hover:underline">Lupa Kata Sandi?</button>
+                </div>
+                <input required type="password" placeholder="••••••••" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-sky-500" />
+              </div>
+
+              <div className="flex items-center gap-2 py-1">
+                <input type="checkbox" id="remember" className="rounded bg-slate-950 border-slate-800 text-sky-500 focus:ring-0 w-4 h-4" />
+                <label htmlFor="remember" className="text-xs text-slate-400 cursor-pointer">Ingat Perangkat Ini selama 30 Hari</label>
+              </div>
+
+              <button type="submit" className="w-full py-3.5 bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-600 hover:to-teal-600 rounded-xl font-bold text-sm text-white shadow-lg transition">
+                Masuk ke Dashboard
+              </button>
+            </form>
+
+            <div className="relative my-6 text-center">
+              <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 border-b border-slate-800"></span>
+              <span className="relative bg-slate-900 px-3 text-xs text-slate-500 uppercase font-semibold">Atau</span>
+            </div>
+
+            <button onClick={() => { setCurrentRoute('dashboard'); showToast("Google Auth Berhasil!", "success"); }} className="w-full py-3 bg-slate-950 hover:bg-slate-850 border border-slate-800 rounded-xl text-xs font-bold text-slate-200 flex items-center justify-center gap-2 transition">
+              <svg className="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12.24 10.285V13.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l2.427-2.334C17.955 2.192 15.34 1 12.24 1 6.033 1 1 6.033 1 12.24s5.033 11.24 11.24 11.24c6.478 0 10.793-4.537 10.793-10.986 0-.745-.08-1.3-.176-1.854H12.24z" />
+              </svg>
+              Masuk dengan Akun Google Workspace
+            </button>
+
+            <p className="text-center text-xs text-slate-400 mt-8">
+              Belum memiliki akun pengembang?{' '}
+              <button onClick={() => setCurrentRoute('register')} className="text-sky-400 font-semibold hover:underline">Hubungi Registrasi Baru</button>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {currentRoute === 'register' && (
+        <div className="min-h-screen flex items-center justify-center p-6 bg-slate-950 relative overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-sky-500/5 blur-[100px] rounded-full"></div>
+          
+          <div className="w-full max-w-md bg-slate-900/80 border border-slate-800 p-8 rounded-2xl shadow-2xl backdrop-blur-md relative z-10">
+            <div className="flex flex-col items-center mb-8">
+              <div onClick={() => setCurrentRoute('landing')} className="cursor-pointer w-12 h-12 bg-gradient-to-tr from-[#0EA5E9] to-[#14B8A6] rounded-xl flex items-center justify-center font-extrabold text-2xl text-white mb-3">
+                A
+              </div>
+              <h3 className="text-2xl font-bold text-white">Registrasi Akun Developer</h3>
+              <p className="text-slate-400 text-xs text-center mt-1">Dapatkan uji coba gratis premium selama 14 hari.</p>
+            </div>
+
+            <form onSubmit={(e) => { e.preventDefault(); setCurrentRoute('dashboard'); showToast("Pendaftaran berhasil, silakan jelajahi!", "success"); }} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Nama Perusahaan / Developer</label>
+                <input required type="text" placeholder="PT Griya Semesta Raya" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-sky-500" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Email Bisnis Terdaftar</label>
+                <input required type="email" placeholder="kontak@griyasemesta.co.id" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-sky-500" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Buat Kata Sandi Baru</label>
+                <input required type="password" placeholder="••••••••" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-sky-500" />
+              </div>
+
+              <div className="flex items-center gap-2 py-1">
+                <input required type="checkbox" id="terms" className="rounded bg-slate-950 border-slate-800 text-sky-500 focus:ring-0 w-4 h-4" />
+                <label htmlFor="terms" className="text-xs text-slate-400 cursor-pointer">Saya menyetujui seluruh Aturan Penggunaan & Kebijakan Data Properti.</label>
+              </div>
+
+              <button type="submit" className="w-full py-3.5 bg-gradient-to-r from-sky-500 to-teal-500 hover:from-sky-600 hover:to-teal-600 rounded-xl font-bold text-sm text-white shadow-lg transition">
+                Daftar & Mulai Trial
+              </button>
+            </form>
+
+            <p className="text-center text-xs text-slate-400 mt-6">
+              Sudah memiliki akun pengembang?{' '}
+              <button onClick={() => setCurrentRoute('login')} className="text-sky-400 font-semibold hover:underline">Masuk Di Sini</button>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {currentRoute === 'forgot' && (
+        <div className="min-h-screen flex items-center justify-center p-6 bg-slate-950 relative overflow-hidden">
+          <div className="w-full max-w-md bg-slate-900/80 border border-slate-800 p-8 rounded-2xl shadow-2xl backdrop-blur-md relative z-10">
+            <div className="flex flex-col items-center mb-8">
+              <h3 className="text-2xl font-bold text-white">Reset Kata Sandi</h3>
+              <p className="text-slate-400 text-xs text-center mt-1">Kami akan mengirimkan petunjuk pemulihan akun ke email Anda.</p>
+            </div>
+
+            <form onSubmit={(e) => { e.preventDefault(); showToast("Tautan Pemulihan Berhasil Terkirim ke Email!", "success"); setCurrentRoute('login'); }} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Alamat Email Akun Anda</label>
+                <input required type="email" placeholder="example@developer.com" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-sky-500" />
+              </div>
+
+              <button type="submit" className="w-full py-3.5 bg-sky-500 hover:bg-sky-600 rounded-xl font-bold text-sm text-white shadow-lg transition">
+                Kirim Tautan Pemulihan
+              </button>
+            </form>
+
+            <button onClick={() => setCurrentRoute('login')} className="w-full text-center text-xs text-slate-400 hover:text-white mt-6 underline block">
+              Kembali Ke Halaman Log In
+            </button>
+          </div>
+        </div>
+      )}
+
+
+      {/* ========================================== */}
+      {/* 3. CORE ENTERPRISE SaaS CRM DASHBOARD     */}
+      {/* ========================================== */}
+      {currentRoute === 'dashboard' && (
+        <div className="flex min-h-screen">
+          
+          {/* Collapsible Sidebar Panel */}
+          <aside className={`${sidebarCollapsed ? 'w-20' : 'w-64'} transition-all duration-300 bg-slate-900 border-r border-slate-800 flex flex-col justify-between shrink-0`}>
+            <div>
+              {/* Product Brand Banner */}
+              <div className="p-4 border-b border-slate-800 flex items-center justify-between">
+                <div className="flex items-center gap-3 overflow-hidden">
+                  <div className="w-9 h-9 bg-gradient-to-tr from-[#0EA5E9] to-[#14B8A6] rounded-lg flex items-center justify-center font-extrabold text-white shrink-0">
+                    A
+                  </div>
+                  {!sidebarCollapsed && (
+                    <div>
+                      <span className="font-extrabold text-sm tracking-wider text-white">ARCADIA CRM</span>
+                      <span className="text-[9px] block text-sky-400 font-bold tracking-widest leading-none">PROP-TECH</span>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Collapsible Trigger toggle button */}
+                <button 
+                  onClick={() => setSidebarCollapsed(!sidebarCollapsed)} 
+                  className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:text-[#0EA5E9] transition"
+                >
+                  <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={sidebarCollapsed ? "M9 5l7 7-7 7" : "M15 19l-7-7 7-7"} />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Navigation Items (State Router) */}
+              <nav className="p-3 space-y-1">
+                {[
+                  { id: 'overview', name: 'Dashboard Overview', icon: Icons.Dashboard },
+                  { id: 'leads', name: 'Leads Management', icon: Icons.Leads, badge: leadsDb.length },
+                  { id: 'kanban', name: 'Sales Pipeline Kanban', icon: Icons.Kanban },
+                  { id: 'whatsapp', name: 'WhatsApp & Rotator', icon: Icons.WhatsApp },
+                  { id: 'projects', name: 'Unit Inventory', icon: Icons.Project },
+                  { id: 'leaderboard', name: 'Sales Leaderboard', icon: Icons.Leaderboard },
+                  { id: 'reports', name: 'Executive Analytics', icon: Icons.Reports },
+                  { id: 'settings', name: 'CRM Settings', icon: Icons.Settings }
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setCurrentModule(item.id)}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-sm font-medium transition ${
+                      currentModule === item.id 
+                        ? 'bg-[#0EA5E9] text-white shadow-lg shadow-sky-500/20' 
+                        : 'text-slate-400 hover:bg-slate-950/40 hover:text-white'
+                    }`}
+                  >
+                    <item.icon className="w-5 h-5 shrink-0" />
+                    {!sidebarCollapsed && <span className="truncate">{item.name}</span>}
+                    {!sidebarCollapsed && item.badge && (
+                      <span className="ml-auto bg-slate-950/50 text-[#0EA5E9] px-2 py-0.5 rounded-full text-xs font-bold">{item.badge}</span>
+                    )}
+                  </button>
+                ))}
+              </nav>
+            </div>
+
+            {/* Quick Profile & Logout Section */}
+            <div className="p-3 border-t border-slate-800">
+              <div className="flex items-center gap-3 p-2 bg-slate-950/40 rounded-xl mb-2 overflow-hidden">
+                <div className="w-9 h-9 rounded-full bg-[#14B8A6]/20 border border-[#14B8A6] flex items-center justify-center font-bold text-teal-400 shrink-0">
+                  UA
+                </div>
+                {!sidebarCollapsed && (
+                  <div className="truncate">
+                    <span className="text-xs font-bold block text-slate-100">Utomo Adi</span>
+                    <span className="text-[10px] text-teal-400 block font-semibold">{currentUserRole}</span>
+                  </div>
+                )}
+              </div>
+              <button 
+                onClick={() => { setCurrentRoute('landing'); showToast("Berhasil Keluar dari Sesi CRM", "info"); }}
+                className="w-full flex items-center gap-3 px-3 py-2 text-rose-400 hover:bg-rose-500/10 rounded-xl text-sm transition"
+              >
+                <Icons.LogOut className="w-5 h-5 shrink-0" />
+                {!sidebarCollapsed && <span>Keluar Sistem</span>}
+              </button>
+            </div>
+          </aside>
+
+          {/* Main Layout Area */}
+          <main className="flex-1 flex flex-col min-w-0">
+            
+            {/* Real-time Responsive App Header */}
+            <header className="h-16 bg-slate-900 border-b border-slate-800 px-6 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                  </span>
+                  <span className="text-emerald-400 font-bold tracking-widest">LIVE SUPABASE CLOUD</span>
+                </div>
+
+                {/* Simulated Switch User Role */}
+                <div className="hidden sm:flex items-center gap-2 text-xs text-slate-400 border-l border-slate-800 pl-4">
+                  <span>Role: </span>
+                  <select 
+                    value={currentUserRole} 
+                    onChange={(e) => { setCurrentUserRole(e.target.value); showToast(`Beralih Akses Ke Role: ${e.target.value}`, "info"); }}
+                    className="bg-slate-950 border border-slate-800 text-xs px-2 py-1 rounded text-sky-400 focus:outline-none focus:border-sky-500"
+                  >
+                    <option value="Super Admin">Super Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Sales">Sales In-House</option>
+                    <option value="Marketing">Marketing Admin</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Action Buttons, Notifications, and Search Input */}
+              <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => {
+                    setTheme(theme === 'dark' ? 'light' : 'dark');
+                    showToast(`Beralih ke Mode Visual ${theme === 'dark' ? 'Terang' : 'Gelap'}`);
+                  }}
+                  className="p-2 rounded-lg bg-slate-950 hover:bg-slate-850 text-slate-300 border border-slate-800 transition"
+                  title="Ganti Mode Warna"
+                >
+                  {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+                </button>
+
+                {/* Notifications Bell Button */}
+                <div className="relative group">
+                  <button className="p-2 rounded-lg bg-slate-950 hover:bg-slate-850 text-slate-300 border border-slate-800 transition">
+                    <Icons.Bell />
+                    <span className="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full"></span>
+                  </button>
+                  {/* Notifications Dropdown */}
+                  <div className="absolute right-0 top-11 w-80 bg-[#1E293B] border border-slate-800 rounded-xl shadow-2xl p-4 hidden group-hover:block z-50">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="font-bold text-xs text-slate-100">Notifikasi Real-time</span>
+                      <span className="text-[10px] bg-sky-500/10 text-[#0EA5E9] px-2 py-0.5 rounded-full font-bold">3 Baru</span>
+                    </div>
+                    <div className="space-y-2 text-xs">
+                      <div className="p-2 hover:bg-slate-900 rounded-lg border-b border-slate-800/60 pb-2">
+                        <p className="font-semibold text-slate-200">💥 Closing Sukses!</p>
+                        <p className="text-slate-400">Hendrik Wijaya lunas termin ke-3. Komisi cair.</p>
+                        <span className="text-[10px] text-slate-500 block mt-1">10 menit yang lalu</span>
+                      </div>
+                      <div className="p-2 hover:bg-slate-900 rounded-lg border-b border-slate-800/60 pb-2">
+                        <p className="font-semibold text-slate-200">📅 Agenda Survey Besok</p>
+                        <p className="text-slate-400">Dewi Citrawati mengkonfirmasi survey jam 14:00.</p>
+                        <span className="text-[10px] text-slate-500 block mt-1">1 jam yang lalu</span>
+                      </div>
+                      <div className="p-2 hover:bg-slate-900 rounded-lg">
+                        <p className="font-semibold text-slate-200">🚀 Leads Baru via Meta Ads</p>
+                        <p className="text-slate-400">Amalia Siregar mendaftar dari campaign promo.</p>
+                        <span className="text-[10px] text-slate-500 block mt-1">2 jam yang lalu</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => setShowAddLeadModal(true)} 
+                  className="px-4 py-2.5 bg-[#0EA5E9] hover:bg-[#0EA5E9]/90 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-sky-500/25 transition"
+                >
+                  <Icons.Plus className="w-4 h-4" /> Lead Baru
+                </button>
+              </div>
+            </header>
+
+            {/* Dashboard Content Routing Switch Board */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              
+              {/* Overview Dashboard Module */}
+              {currentModule === 'overview' && (
+                <div className="space-y-6">
+                  {/* Executive Header Banner */}
+                  <div className="bg-gradient-to-r from-[#1E293B] to-[#0F172A] p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                      <h2 className="text-xl md:text-2xl font-bold text-white">Monitoring Executive Dashboard</h2>
+                      <p className="text-xs text-slate-400 mt-1">Selamat datang kembali, Utomo Adi. Berikut adalah ringkasan konversi properti Anda hari ini secara real-time.</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button onClick={handleSimulateNewLead} className="px-3.5 py-2 bg-slate-900 border border-slate-800 hover:bg-slate-800 rounded-xl text-xs font-bold text-[#0EA5E9] flex items-center gap-1.5 transition">
+                        <Icons.Sparkles className="w-4 h-4 text-sky-400 animate-pulse" /> Simulasikan Leads Masuk
+                      </button>
+                      <button onClick={triggerExcelExport} className="px-3.5 py-2 bg-[#1E293B] hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition">
+                        <Icons.Download className="w-4 h-4" /> Download PDF Report
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Four Core KPI Metric Cards */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {[
+                      { title: 'Total Leads Masuk', value: totalLeads, diff: '+14% dari minggu lalu', arrow: Icons.ArrowUpRight, trendColor: 'text-emerald-500', iconBg: 'bg-sky-500/15 text-sky-400', icon: Icons.Leads },
+                      { title: 'Kategori Hot Leads', value: hotLeadsCount, diff: '+8.3% dari minggu lalu', arrow: Icons.ArrowUpRight, trendColor: 'text-emerald-500', iconBg: 'bg-rose-500/15 text-rose-400', icon: Icons.Brain },
+                      { title: 'Booking Terkonfirmasi', value: leadsDb.filter(l => l.stage === 'Booking').length, diff: '-2.1% dari bulan lalu', arrow: Icons.ArrowDownLeft, trendColor: 'text-rose-500', iconBg: 'bg-amber-500/15 text-amber-400', icon: Icons.Calendar },
+                      { title: 'Closing & Akad Lunas', value: leadsDb.filter(l => l.stage === 'Closing').length, diff: '+22.5% dari target', arrow: Icons.ArrowUpRight, trendColor: 'text-emerald-500', iconBg: 'bg-emerald-500/15 text-emerald-400', icon: Icons.Check }
+                    ].map((kpi, index) => (
+                      <div key={index} className="bg-slate-900 p-5 rounded-2xl border border-slate-800 relative overflow-hidden group hover:border-[#0EA5E9]/50 transition duration-300">
+                        <div className="flex justify-between items-start mb-4">
+                          <div>
+                            <span className="text-xs text-slate-400 font-semibold block mb-1">{kpi.title}</span>
+                            <span className="text-3xl font-extrabold text-white tracking-tight">{kpi.value}</span>
+                          </div>
+                          <div className={`p-3 rounded-xl ${kpi.iconBg}`}>
+                            <kpi.icon className="w-6 h-6" />
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <kpi.arrow className={`w-4 h-4 ${kpi.trendColor}`} />
+                          <span className={`text-xs font-bold ${kpi.trendColor}`}>{kpi.diff}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Complex Interactive Charts Section */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Performance Conversion Funnel Chart Card (Custom SVGs for responsive elegance) */}
+                    <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 lg:col-span-2">
+                      <div className="flex justify-between items-center mb-6">
+                        <div>
+                          <h4 className="font-bold text-sm md:text-base text-slate-100">Funnel Konversi Penjualan (Januari - Juni 2026)</h4>
+                          <p className="text-xs text-slate-400 mt-1">Mengukur efisiensi perpindahan stage dari leads pertama kali masuk.</p>
+                        </div>
+                        <span className="text-xs bg-[#14B8A6]/10 text-[#14B8A6] font-bold px-3 py-1 rounded-full">Konversi: {conversionRate}%</span>
+                      </div>
+
+                      {/* Custom High Quality Responsive Interactive Vector Funnel Map */}
+                      <div className="space-y-4">
+                        {[
+                          { stage: "Leads Masuk (Meta Ads & Form)", count: totalLeads, pct: "100%", width: "w-full", color: "from-sky-500 to-sky-600" },
+                          { stage: "Survey Lapangan Terjadwal", count: leadsDb.filter(l => l.stage !== 'Lead').length, pct: "75%", width: "w-[75%]", color: "from-teal-500 to-teal-600" },
+                          { stage: "Unit Booking Confirm (UTJ Masuk)", count: leadsDb.filter(l => ['Booking', 'Akad', 'Closing'].includes(l.stage)).length, pct: "37.5%", width: "w-[37.5%]", color: "from-amber-500 to-amber-600" },
+                          { stage: "Akad / Verifikasi KPR Bank", count: leadsDb.filter(l => ['Akad', 'Closing'].includes(l.stage)).length, pct: "25%", width: "w-[25%]", color: "from-violet-500 to-violet-600" },
+                          { stage: "Closing Selesai / Serah Terima Kunci", count: leadsDb.filter(l => l.stage === 'Closing').length, pct: "12.5%", width: "w-[12.5%]", color: "from-emerald-500 to-emerald-600" }
+                        ].map((funnel, index) => (
+                          <div key={index} className="space-y-1.5">
+                            <div className="flex justify-between text-xs font-semibold text-slate-300">
+                              <span>{funnel.stage}</span>
+                              <span className="text-white font-bold">{funnel.count} Prospek ({funnel.pct})</span>
+                            </div>
+                            <div className="w-full bg-slate-950 h-3.5 rounded-full overflow-hidden">
+                              <div className={`h-full bg-gradient-to-r ${funnel.color} rounded-full transition-all duration-500`} style={{ width: funnel.pct }}></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Campaign Performance Breakdown Card */}
+                    <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                      <h4 className="font-bold text-sm md:text-base text-slate-100 mb-4">Efisiensi Sumber Kampanye Marketing</h4>
+                      
+                      {/* Vertical Chart / Progress Stack */}
+                      <div className="space-y-4 mt-6">
+                        {[
+                          { name: "Meta Ads (IG & FB)", count: leadsDb.filter(l => l.source.includes("Meta")).length, conversion: "12.4%", color: "bg-sky-500" },
+                          { name: "TikTok Lead Form Ads", count: leadsDb.filter(l => l.source.includes("TikTok")).length, conversion: "8.2%", color: "bg-teal-500" },
+                          { name: "Organic Search / SEO", count: leadsDb.filter(l => l.source.includes("Google")).length, conversion: "18.5%", color: "bg-emerald-500" },
+                          { name: "Referral Agent / Broker", count: leadsDb.filter(l => l.source.includes("Referral")).length, conversion: "24.1%", color: "bg-amber-500" },
+                          { name: "WhatsApp & Banner Fisik", count: leadsDb.filter(l => l.source.includes("WhatsApp") || l.source.includes("Spanduk")).length, conversion: "5.1%", color: "bg-indigo-500" }
+                        ].map((source, index) => (
+                          <div key={index} className="p-3 bg-slate-950 rounded-xl border border-slate-800/60">
+                            <div className="flex justify-between text-xs mb-2">
+                              <span className="font-bold text-slate-200">{source.name}</span>
+                              <span className="text-[#14B8A6] font-bold">Conv. Rate: {source.conversion}</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                                <div className={`h-full ${source.color} rounded-full`} style={{ width: `${(source.count / totalLeads) * 100}%` }}></div>
+                              </div>
+                              <span className="text-xs font-semibold text-slate-400 shrink-0">{source.count} Leads</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Recent Activity Logs */}
+                  <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                    <div className="flex justify-between items-center mb-6">
+                      <div>
+                        <h4 className="font-bold text-sm md:text-base text-slate-100">Live Activity Feed (Sistem Otomasi Arcadia)</h4>
+                        <p className="text-xs text-slate-400 mt-1">Riwayat tindakan, distribusi, dan perubahan data pelanggan real-time.</p>
+                      </div>
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping inline-block"></span>
+                    </div>
+
+                    <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2">
+                      {leadsDb.flatMap(l => l.activityTimeline.map(act => ({ ...act, leadName: l.name, leadId: l.id }))).map((log, index) => (
+                        <div key={index} className="flex gap-4 p-3 bg-slate-950/40 rounded-xl border border-slate-800 text-xs">
+                          <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center shrink-0">
+                            {log.type === 'system' ? <Icons.Dashboard className="w-4 h-4" /> : (log.type === 'whatsapp' ? <Icons.WhatsApp className="w-4 h-4 text-teal-400" /> : <Icons.Sparkles className="w-4 h-4 text-amber-400" />)}
+                          </div>
+                          <div>
+                            <div className="flex gap-2 items-center">
+                              <span className="font-bold text-slate-200">{log.leadName} ({log.leadId})</span>
+                              <span className="text-slate-500">•</span>
+                              <span className="text-slate-400">{log.time}</span>
+                            </div>
+                            <p className="text-slate-300 mt-1">{log.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+
+              {/* Leads Management Module */}
+              {currentModule === 'leads' && (
+                <div className="space-y-6">
+                  
+                  {/* Filter Action Control Deck */}
+                  <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col md:flex-row gap-4 justify-between items-center">
+                    
+                    {/* Search Field */}
+                    <div className="relative w-full md:max-w-md">
+                      <Icons.Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+                      <input 
+                        type="text" 
+                        placeholder="Cari Prospek nama, unit, kode lead, sales..." 
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-11 pr-4 py-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-sky-500"
+                      />
+                    </div>
+
+                    {/* Classification filter switches */}
+                    <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+                      {[
+                        { code: 'ALL', label: 'Semua Kategori' },
+                        { code: 'HOT', label: '🔥 Hot Prospek' },
+                        { code: 'WARM', label: '⚡ Warm' },
+                        { code: 'COLD', label: '❄️ Cold' }
+                      ].map((btn) => (
+                        <button
+                          key={btn.code}
+                          onClick={() => setFilterClassification(btn.code)}
+                          className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition ${
+                            filterClassification === btn.code 
+                              ? 'bg-sky-500 text-white' 
+                              : 'bg-slate-950 text-slate-400 border border-slate-800 hover:text-white'
+                          }`}
+                        >
+                          {btn.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Leads Data Table */}
+                  <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="bg-slate-950 text-slate-400 text-xs font-bold border-b border-slate-800 uppercase tracking-wider">
+                            <th className="p-4">ID Lead</th>
+                            <th className="p-4">Nama Pelanggan</th>
+                            <th className="p-4">Minat Proyek & Harga</th>
+                            <th className="p-4">Sumber Lead</th>
+                            <th className="p-4 text-center">AI Closing Prob.</th>
+                            <th className="p-4">Sales Assigned</th>
+                            <th className="p-4">Status Stage</th>
+                            <th className="p-4 text-right">Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-800 text-xs">
+                          {filteredLeads.length > 0 ? (
+                            filteredLeads.map((lead) => (
+                              <tr key={lead.id} className="hover:bg-slate-950/50 transition">
+                                <td className="p-4 font-mono text-[#0EA5E9] font-bold">{lead.id}</td>
+                                <td className="p-4">
+                                  <span className="font-bold text-slate-100 block">{lead.name}</span>
+                                  <span className="text-[10px] text-slate-500 block">{lead.phone}</span>
+                                </td>
+                                <td className="p-4">
+                                  <span className="font-semibold block text-slate-300">{lead.interest}</span>
+                                  <span className="text-teal-400 font-bold">{lead.price}</span>
+                                </td>
+                                <td className="p-4">
+                                  <span className="bg-slate-950 text-slate-400 px-2 py-1 rounded border border-slate-800 font-medium block w-fit">{lead.source}</span>
+                                </td>
+                                <td className="p-4 text-center">
+                                  <div className="flex flex-col items-center">
+                                    <span className={`font-bold text-sm ${lead.score >= 85 ? 'text-emerald-400' : (lead.score >= 60 ? 'text-amber-400' : 'text-slate-400')}`}>
+                                      {lead.score}%
+                                    </span>
+                                    <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase ${
+                                      lead.classification === 'HOT' ? 'bg-rose-500/10 text-rose-400' : 
+                                      (lead.classification === 'WARM' ? 'bg-amber-500/10 text-amber-400' : 'bg-slate-800 text-slate-400')
+                                    }`}>
+                                      {lead.classification}
+                                    </span>
+                                  </div>
+                                </td>
+                                <td className="p-4 font-semibold text-slate-300">{lead.sales}</td>
+                                <td className="p-4">
+                                  <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                    lead.stage === 'Closing' ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' :
+                                    (lead.stage === 'Akad' ? 'bg-violet-500/15 text-violet-400 border border-violet-500/30' :
+                                    (lead.stage === 'Booking' ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30' :
+                                    (lead.stage === 'Survey' ? 'bg-teal-500/15 text-teal-400 border border-teal-500/30' : 'bg-sky-500/15 text-sky-400 border border-sky-500/30')))
+                                  }`}>
+                                    {lead.stage}
+                                  </span>
+                                </td>
+                                <td className="p-4 text-right">
+                                  <div className="flex gap-2 justify-end">
+                                    <button 
+                                      onClick={() => setSelectedLead(lead)}
+                                      className="px-2.5 py-1.5 bg-[#0EA5E9]/10 hover:bg-[#0EA5E9] text-[#0EA5E9] hover:text-white rounded-lg font-bold transition"
+                                    >
+                                      Detail / AI
+                                    </button>
+                                    <button 
+                                      onClick={() => {
+                                        const phoneNo = lead.phone.replace(/[^0-9]/g, '');
+                                        window.open(`https://api.whatsapp.com/send?phone=${phoneNo}&text=Halo%20${lead.name},%20saya%20${lead.sales}%20dari%20Arcadia%20Property.%20Mengenai%20unit%20${lead.interest}...`, '_blank');
+                                        showToast(`Direct WhatsApp Click-to-chat terpicu untuk ${lead.name}`, 'info');
+                                      }}
+                                      className="p-1.5 bg-teal-500/10 hover:bg-teal-500 text-teal-400 hover:text-white rounded-lg transition"
+                                      title="Kirim Pesan WhatsApp Hub"
+                                    >
+                                      <Icons.WhatsApp className="w-4 h-4" />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan="8" className="p-8 text-center text-slate-500">
+                                <Icons.Leads className="w-12 h-12 mx-auto text-slate-700 mb-3" />
+                                Tidak ada leads ditemukan untuk kata kunci "{searchTerm}".
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+
+              {/* Sales Pipeline Kanban Module */}
+              {currentModule === 'kanban' && (
+                <div className="space-y-4">
+                  <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                      <h3 className="font-bold text-slate-100 text-sm md:text-base">Interactive Drag-and-Drop Sales Pipeline Kanban</h3>
+                      <p className="text-xs text-slate-400 mt-1">Gunakan klik tombol pemindah cepat di kartu leads untuk mendemonstrasikan kelancaran alur perpindahan transaksi.</p>
+                    </div>
+                    <span className="text-xs text-sky-400 bg-sky-500/10 px-3 py-1.5 rounded-xl font-semibold">Total Nilai Proyek Terpantau: Rp 11.230.000.000</span>
+                  </div>
+
+                  {/* 5 Grid Kanban Columns */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    {['Lead', 'Survey', 'Booking', 'Akad', 'Closing'].map((stage) => {
+                      const stageLeads = leadsDb.filter(l => l.stage === stage);
+                      return (
+                        <div key={stage} className="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col min-h-[480px]">
+                          <div className="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
+                            <h5 className="font-bold text-xs text-slate-200 uppercase tracking-wider">{stage}</h5>
+                            <span className="bg-[#0EA5E9]/15 text-[#0EA5E9] px-2 py-0.5 rounded-full text-[10px] font-bold">{stageLeads.length}</span>
+                          </div>
+
+                          <div className="space-y-3 flex-1 overflow-y-auto">
+                            {stageLeads.length > 0 ? (
+                              stageLeads.map((lead) => (
+                                <div key={lead.id} className="p-3 bg-slate-900 border border-slate-800/80 rounded-lg hover:border-sky-500 transition-all shadow duration-200">
+                                  <div className="flex justify-between items-start mb-2">
+                                    <span className="font-mono text-[9px] text-[#0EA5E9] font-bold">{lead.id}</span>
+                                    <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold ${
+                                      lead.classification === 'HOT' ? 'bg-rose-500/10 text-rose-400' : 
+                                      (lead.classification === 'WARM' ? 'bg-amber-500/10 text-amber-400' : 'bg-slate-800 text-slate-400')
+                                    }`}>
+                                      {lead.classification}
+                                    </span>
+                                  </div>
+                                  <h6 className="font-bold text-xs text-slate-200 leading-tight">{lead.name}</h6>
+                                  <p className="text-[10px] text-slate-400 mt-1">{lead.interest}</p>
+                                  <p className="text-[10px] text-[#14B8A6] font-bold mt-0.5">{lead.price}</p>
+                                  
+                                  <div className="border-t border-slate-800/60 mt-3 pt-2.5 flex justify-between items-center">
+                                    <span className="text-[9px] text-slate-500">{lead.sales}</span>
+                                    <div className="flex gap-1.5">
+                                      {stage !== 'Closing' && (
+                                        <button 
+                                          onClick={() => {
+                                            const stages = ['Lead', 'Survey', 'Booking', 'Akad', 'Closing'];
+                                            const nextIdx = stages.indexOf(stage) + 1;
+                                            handleMoveStage(lead.id, stages[nextIdx]);
+                                          }}
+                                          className="px-2 py-1 bg-sky-500/20 text-[#0EA5E9] hover:bg-sky-500 hover:text-white rounded text-[9px] font-bold transition flex items-center gap-0.5"
+                                          title="Pindahkan Ke Tahap Selanjutnya"
+                                        >
+                                          Majukan
+                                          <Icons.ArrowUpRight className="w-3 h-3" />
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              ))
+                            ) : (
+                              <div className="flex-1 flex items-center justify-center border-2 border-dashed border-slate-900 rounded-lg py-12 text-[10px] text-slate-600 text-center">
+                                Kolom Kosong
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+
+              {/* WhatsApp Rotator & Marketing Module */}
+              {currentModule === 'whatsapp' && (
+                <div className="space-y-6">
+                  {/* WhatsApp Header Widget */}
+                  <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                    <h3 className="font-bold text-slate-100 text-sm md:text-base">Pusat Integrasi WhatsApp & Rotator Prospek</h3>
+                    <p className="text-xs text-slate-400 mt-1">Konfigurasikan pembagian bobot leads secara adil otomatis dan kelola pengiriman WhatsApp Blast terjadwal.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Rotator Weighing Panel */}
+                    <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-6">
+                      <div className="flex justify-between items-center">
+                        <h4 className="font-bold text-sm text-slate-200">Konfigurasi WhatsApp Rotator (Metode Pembagian Proposional)</h4>
+                        <span className="text-xs bg-sky-500/10 text-[#0EA5E9] px-2.5 py-1 rounded font-bold">Auto Assign Active</span>
+                      </div>
+
+                      {/* Rotator Weights Sliders */}
+                      <div className="space-y-4">
+                        {rotatorWeights.map((sales, index) => (
+                          <div key={sales.id} className="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                            <div className="flex justify-between text-xs mb-2 font-semibold">
+                              <span className="text-slate-200">{sales.name}</span>
+                              <span className="text-sky-400 font-bold">Bobot Rotasi: {sales.weight}%</span>
+                            </div>
+                            <input 
+                              type="range" 
+                              min="0" 
+                              max="100" 
+                              value={sales.weight} 
+                              onChange={(e) => {
+                                const newWeight = parseInt(e.target.value);
+                                setRotatorWeights(prev => prev.map(s => s.id === sales.id ? { ...s, weight: newWeight } : s));
+                              }}
+                              className="w-full accent-sky-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer mb-2"
+                            />
+                            <div className="flex justify-between items-center text-[10px] text-slate-400 mt-1">
+                              <span>Aktif Menangani: {sales.activeLeads} Leads</span>
+                              <span>Peluang Masuk Berikutnya: {sales.weight}%</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <button 
+                        onClick={() => {
+                          showToast("Konfigurasi Rotator Berhasil Disimpan & Sinkronisasi dengan Webhook Meta Ads!", "success");
+                        }} 
+                        className="w-full py-3 bg-[#0EA5E9] hover:bg-sky-600 font-bold text-xs text-white rounded-xl shadow transition"
+                      >
+                        Simpan Bobot Rotasi
+                      </button>
+                    </div>
+
+                    {/* WhatsApp Blast Panel */}
+                    <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                      <h4 className="font-bold text-sm text-slate-200">Automated WhatsApp Blast Hub</h4>
+                      <p className="text-xs text-slate-400">Kirim broadcast penawaran unit kustom secara personalisasi kepada target segmen Leads yang sedang diproses.</p>
+                      
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-300 uppercase mb-2">Pilih Segmen Leads</label>
+                        <select 
+                          value={filterClassification} 
+                          onChange={(e) => setFilterClassification(e.target.value)}
+                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-300 focus:outline-none"
+                        >
+                          <option value="ALL">Kirim ke Semua Leads ({leadsDb.length} Kontak)</option>
+                          <option value="HOT">Hanya Hot Leads ({leadsDb.filter(l => l.classification === 'HOT').length} Prospek)</option>
+                          <option value="WARM">Hanya Warm Leads ({leadsDb.filter(l => l.classification === 'WARM').length} Prospek)</option>
+                          <option value="COLD">Hanya Cold Leads ({leadsDb.filter(l => l.classification === 'COLD').length} Prospek)</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-300 uppercase mb-2">Pilih Template Pesan Blast</label>
+                        <select 
+                          value={waBlastTemplate} 
+                          onChange={(e) => setWaBlastTemplate(e.target.value)}
+                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-300 focus:outline-none"
+                        >
+                          <option value="Template 1: Sapaan Hangat & Brosur">Template 1: Sapaan Hangat & Brosur PDF Launching</option>
+                          <option value="Template 2: Undangan Agenda Open House">Template 2: Undangan Event Open House & Free Lunch</option>
+                          <option value="Template 3: Penawaran KPR Khusus">Template 3: Skema Cicilan Custom Flat Syariah 10 Tahun</option>
+                        </select>
+                      </div>
+
+                      <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs">
+                        <span className="text-[10px] text-slate-500 font-bold block uppercase mb-1">Review Preview Pesan (Automated Tags)</span>
+                        <p className="text-slate-300 italic">"Halo {'{nama}'}, berikut brosur lengkap tipe unit {'{tipe}'} yang Anda minati di Arcadia Property. Promo diskon DP 0% khusus s/d akhir pekan ini..."</p>
+                      </div>
+
+                      <button 
+                        onClick={handleSendBlast} 
+                        className="w-full py-3 bg-teal-500 hover:bg-teal-600 font-bold text-xs text-white rounded-xl shadow transition"
+                      >
+                        Kirim Blast WhatsApp Sekarang
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+
+              {/* Unit Inventory & Projects Module */}
+              {currentModule === 'projects' && (
+                <div className="space-y-6">
+                  {/* Inventory Header Widget */}
+                  <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                      <h3 className="font-bold text-slate-100 text-sm md:text-base">Manajemen Unit & Ketersediaan Stok Proyek</h3>
+                      <p className="text-xs text-slate-400 mt-1">Daftar portofolio real-estate aktif dan persentase keterisian unit lapangan secara langsung.</p>
+                    </div>
+                    <button 
+                      onClick={() => showToast("Fitur Tambah Proyek Baru hanya tersedia di Paket Enterprise!", "warning")}
+                      className="px-4 py-2 bg-slate-950 hover:bg-slate-850 border border-slate-800 text-xs font-bold text-sky-400 rounded-xl"
+                    >
+                      + Tambah Proyek Properti
+                    </button>
+                  </div>
+
+                  {/* Property Cards Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {projects.map((proj) => {
+                      const soldPct = ((proj.unitsSold / proj.totalUnits) * 100).toFixed(0);
+                      return (
+                        <div key={proj.id} className="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <span className="text-[10px] bg-sky-500/10 text-[#0EA5E9] px-2 py-0.5 rounded font-bold uppercase">{proj.location}</span>
+                              <h4 className="text-lg font-bold text-white mt-1.5">{proj.name}</h4>
+                            </div>
+                            <span className="text-xs font-bold text-teal-400">{proj.avgPrice}</span>
+                          </div>
+
+                          <div className="space-y-1.5">
+                            <div className="flex justify-between text-xs font-semibold text-slate-400">
+                              <span>Tingkat Keterisian Terjual:</span>
+                              <span className="text-white font-bold">{proj.unitsSold} / {proj.totalUnits} Kavling ({soldPct}%)</span>
+                            </div>
+                            <div className="w-full bg-slate-950 h-3 rounded-full overflow-hidden">
+                              <div className="h-full bg-gradient-to-r from-sky-500 to-teal-500 rounded-full" style={{ width: `${soldPct}%` }}></div>
+                            </div>
+                          </div>
+
+                          <div className="flex gap-2 justify-end pt-2">
+                            <button 
+                              onClick={() => showToast(`Stok fisik untuk unit properti ${proj.name} terhubung sinkron!`, 'info')}
+                              className="px-3 py-1.5 bg-slate-950 hover:bg-slate-850 text-slate-300 rounded-lg text-xs font-semibold transition"
+                            >
+                              Lihat Kavling Plan (Peta)
+                            </button>
+                            <button 
+                              onClick={() => {
+                                setNewLeadForm(prev => ({ ...prev, interest: `${proj.name} - Unit Custom` }));
+                                setShowAddLeadModal(true);
+                              }}
+                              className="px-3 py-1.5 bg-[#0EA5E9]/15 hover:bg-[#0EA5E9] text-[#0EA5E9] hover:text-white rounded-lg text-xs font-bold transition"
+                            >
+                              Booking Unit Ini
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+
+              {/* Sales Leaderboard Module */}
+              {currentModule === 'leaderboard' && (
+                <div className="space-y-6">
+                  {/* Leaderboard Header Widget */}
+                  <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                    <h3 className="font-bold text-slate-100 text-sm md:text-base">Leaderboard & Produktivitas Tim Sales Properti</h3>
+                    <p className="text-xs text-slate-400 mt-1">Pantau pencapaian omset, jumlah survey, dan persentase konversi tiap marketing secara harian.</p>
+                  </div>
+
+                  {/* Leaderboard Table List */}
+                  <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr className="bg-slate-950 text-slate-400 text-xs font-bold border-b border-slate-800 uppercase tracking-wider">
+                            <th className="p-4 text-center">Peringkat</th>
+                            <th className="p-4">Nama Agen Marketing</th>
+                            <th className="p-4">Total Prospek Ditangani</th>
+                            <th className="p-4">Survey Selesai</th>
+                            <th className="p-4">Closing Unit</th>
+                            <th className="p-4">Total Omset Penjualan</th>
+                            <th className="p-4 text-right">Tingkat Closing</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-800 text-xs">
+                          {[
+                            { rank: "🏆 1st", name: "Yusuf Al-Farabi", leads: 42, surveys: 28, closings: 8, revenue: "Rp 11.600.000.000", conv: "19.0%" },
+                            { rank: "🥈 2nd", name: "Siti Rahma", leads: 35, surveys: 19, closings: 5, revenue: "Rp 4.900.000.000", conv: "14.2%" },
+                            { rank: "🥉 3rd", name: "Budi Santoso", leads: 28, surveys: 12, closings: 3, revenue: "Rp 3.850.000.000", conv: "10.7%" }
+                          ].map((sales, index) => (
+                            <tr key={index} className="hover:bg-slate-950/50 transition">
+                              <td className="p-4 font-bold text-center text-sm">{sales.rank}</td>
+                              <td className="p-4 font-bold text-slate-100">{sales.name}</td>
+                              <td className="p-4 text-slate-300 font-semibold">{sales.leads} Prospek</td>
+                              <td className="p-4 text-slate-300 font-semibold">{sales.surveys} Kali</td>
+                              <td className="p-4 text-emerald-400 font-extrabold">{sales.closings} Unit</td>
+                              <td className="p-4 font-extrabold text-[#14B8A6]">{sales.revenue}</td>
+                              <td className="p-4 text-right font-bold text-[#0EA5E9]">{sales.conv}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+
+              {/* Reports & Analytics Module */}
+              {currentModule === 'reports' && (
+                <div className="space-y-6">
+                  {/* Reports Header Widget */}
+                  <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 flex justify-between items-center flex-wrap gap-4">
+                    <div>
+                      <h3 className="font-bold text-slate-100 text-sm md:text-base">Executive Analytics & Custom Laporan Laba/Rugi</h3>
+                      <p className="text-xs text-slate-400 mt-1">Ekspor laporan terpusat, log audit keamanan, dan sinkronisasi otomatis Google Sheets dalam 1-Klik.</p>
+                    </div>
+                    <button 
+                      onClick={triggerExcelExport}
+                      className="px-4 py-2 bg-gradient-to-r from-sky-500 to-teal-500 hover:opacity-90 font-bold text-xs text-white rounded-xl shadow transition"
+                    >
+                      Download Excel Database Leads ({leadsDb.length} Baris)
+                    </button>
+                  </div>
+
+                  {/* Audit Logs and Security System Tracking */}
+                  <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+                    <h4 className="font-bold text-sm text-slate-200 mb-4">Audit Security Log System</h4>
+                    <div className="space-y-2 text-xs">
+                      {[
+                        { time: "2026-06-21 11:30:45", user: "Utomo Adi (Super Admin)", action: "Melakukan integrasi API Meta Conversion Pixels." },
+                        { time: "2026-06-21 10:15:22", user: "Siti Rahma (Sales Agency)", action: "Merubah status prospek Dewi Citrawati menjadi STAGE: Survey." },
+                        { time: "2026-06-21 09:12:11", user: "Sistem Otomasi Arcadia", action: "Distribusi otomatis via Rotator untuk Lead baru LE-9204." },
+                        { time: "2026-06-20 18:44:00", user: "Budi Santoso (Freelance)", action: "Mengakses database kontak prospek Hendrik Wijaya." }
+                      ].map((log, idx) => (
+                        <div key={idx} className="p-3 bg-slate-950 rounded-xl border border-slate-800/80 flex justify-between items-center">
+                          <div>
+                            <span className="font-mono text-slate-500 block text-[10px]">{log.time}</span>
+                            <span className="font-bold text-slate-300">{log.user}</span>
+                          </div>
+                          <span className="text-slate-400 font-medium text-right">{log.action}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+
+              {/* Settings Module */}
+              {currentModule === 'settings' && (
+                <div className="space-y-6">
+                  {/* Settings Profile Settings */}
+                  <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h4 className="font-bold text-sm text-slate-200">Profil & Integrasi Perusahaan Developer</h4>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">Nama Perusahaan Developer</label>
+                        <input type="text" defaultValue="PT Arcadia Semesta Raya" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">Zona Waktu Operasional</label>
+                        <input type="text" defaultValue="Asia/Jakarta (WIB)" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-400 focus:outline-none" disabled />
+                      </div>
+                    </div>
+
+                    <button 
+                      onClick={() => showToast("Pengaturan profil berhasil disimpan!", "success")}
+                      className="px-4 py-2 bg-sky-500 hover:bg-sky-600 font-bold text-xs text-white rounded-lg transition"
+                    >
+                      Simpan Profil
+                    </button>
+                  </div>
+
+                  {/* Danger Zone Section */}
+                  <div className="bg-slate-900/50 p-6 rounded-2xl border border-rose-500/30 space-y-4">
+                    <h4 className="font-bold text-sm text-rose-500">Danger Zone</h4>
+                    <p className="text-xs text-slate-400">Tindakan berikut akan menghapus seluruh data leads, kavling properti, dan log rotasi marketing secara permanen dan tidak dapat dibatalkan.</p>
+                    
+                    <button 
+                      onClick={() => {
+                        const confirmReset = confirm("Apakah Anda yakin ingin melakukan factory reset total? Semua leads akan dihapus.");
+                        if (confirmReset) {
+                          setLeadsDb([]);
+                          showToast("Database Leads Berhasil Direset Kosong!", "warning");
+                        }
+                      }}
+                      className="px-4 py-2.5 bg-rose-500 hover:bg-rose-600 font-bold text-xs text-white rounded-lg transition"
+                    >
+                      Reset Seluruh Database CRM
+                    </button>
+                  </div>
+                </div>
+              )}
+
+            </div>
+          </main>
+        </div>
+      )}
+
+
+      {/* ========================================== */}
+      {/* 4. MODAL / DIALOG PANELS                  */}
+      {/* ========================================== */}
+      
+      {/* Insert Custom Lead Entry Modal */}
+      {showAddLeadModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl relative">
+            <h3 className="text-lg font-bold text-white mb-4">Tambahkan Prospek Lead Baru Secara Manual</h3>
+            
+            <form onSubmit={handleCreateLeadCustom} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Nama Lengkap Prospek</label>
+                <input 
+                  required 
+                  type="text" 
+                  placeholder="Budi Rahardjo"
+                  value={newLeadForm.name}
+                  onChange={(e) => setNewLeadForm({...newLeadForm, name: e.target.value})}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none" 
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">No WhatsApp Prospek</label>
+                  <input 
+                    required 
+                    type="text" 
+                    placeholder="+62 812-XXXX" 
+                    value={newLeadForm.phone}
+                    onChange={(e) => setNewLeadForm({...newLeadForm, phone: e.target.value})}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Klasifikasi Lead Awal</label>
+                  <select 
+                    value={newLeadForm.classification}
+                    onChange={(e) => setNewLeadForm({...newLeadForm, classification: e.target.value})}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-300 focus:outline-none"
+                  >
+                    <option value="HOT">🔥 HOT Lead (Siap Booking)</option>
+                    <option value="WARM">⚡ WARM Lead (Ingin Survey)</option>
+                    <option value="COLD">❄️ COLD Lead (Baru Brosur)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Minat Unit Properti</label>
+                  <input 
+                    type="text" 
+                    placeholder="Arcadia Gardenia Unit B12" 
+                    value={newLeadForm.interest}
+                    onChange={(e) => setNewLeadForm({...newLeadForm, interest: e.target.value})}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Harga Unit Estimasi</label>
+                  <input 
+                    type="text" 
+                    placeholder="Rp 850.000.000" 
+                    value={newLeadForm.price}
+                    onChange={(e) => setNewLeadForm({...newLeadForm, price: e.target.value})}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none" 
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Sumber Datangnya Lead</label>
+                  <select 
+                    value={newLeadForm.source}
+                    onChange={(e) => setNewLeadForm({...newLeadForm, source: e.target.value})}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-300 focus:outline-none"
+                  >
+                    <option value="Meta Ads (Facebook)">Meta Ads (Facebook)</option>
+                    <option value="TikTok Lead Form">TikTok Lead Form</option>
+                    <option value="Google Search (SEO)">Google Search (SEO)</option>
+                    <option value="WhatsApp Direct Link">WhatsApp Direct Link</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Sales yang Ditugaskan</label>
+                  <select 
+                    value={newLeadForm.sales}
+                    onChange={(e) => setNewLeadForm({...newLeadForm, sales: e.target.value})}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-300 focus:outline-none"
+                  >
+                    <option value="Yusuf Al-Farabi">Yusuf Al-Farabi</option>
+                    <option value="Siti Rahma">Siti Rahma</option>
+                    <option value="Budi Santoso">Budi Santoso</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex gap-3 justify-end pt-4 border-t border-slate-800">
+                <button 
+                  type="button" 
+                  onClick={() => setShowAddLeadModal(false)} 
+                  className="px-4 py-2.5 bg-slate-950 hover:bg-slate-850 text-slate-400 rounded-xl text-xs font-semibold"
+                >
+                  Batal
+                </button>
+                <button 
+                  type="submit" 
+                  className="px-5 py-2.5 bg-gradient-to-r from-sky-500 to-teal-500 font-bold text-xs text-white rounded-xl shadow"
+                >
+                  Masukkan Database
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+
+      {/* Detail Prospek Lead & AI Conversion Score Diagnostic Dialog */}
+      {selectedLead && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm">
+          <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            {/* Modal Header Banner */}
+            <div className="flex justify-between items-start mb-6 pb-4 border-b border-slate-800">
+              <div>
+                <span className="font-mono text-xs text-[#0EA5E9] font-bold block">{selectedLead.id}</span>
+                <h3 className="text-xl font-bold text-white mt-1">{selectedLead.name}</h3>
+                <p className="text-xs text-slate-400">Saluran Perolehan: {selectedLead.source}</p>
+              </div>
+              
+              {/* Close Button Trigger */}
+              <button 
+                onClick={() => setSelectedLead(null)}
+                className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-white transition"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Two Column Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              
+              {/* Prospek Information Column */}
+              <div className="space-y-4">
+                <h4 className="font-bold text-xs text-slate-400 uppercase tracking-widest border-b border-slate-800 pb-1">Data Informasi Prospek</h4>
+                
+                <div className="text-xs space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Telepon WA:</span>
+                    <span className="text-white font-semibold">{selectedLead.phone}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Email:</span>
+                    <span className="text-white font-semibold">{selectedLead.email}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Minat Unit:</span>
+                    <span className="text-white font-semibold text-right">{selectedLead.interest}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Harga Jual Unit:</span>
+                    <span className="text-teal-400 font-extrabold">{selectedLead.price}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Sales In-Charge:</span>
+                    <span className="text-[#0EA5E9] font-bold">{selectedLead.sales}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Jadwal Survey:</span>
+                    <span className="text-amber-400 font-bold">{selectedLead.surveyDate}</span>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs mt-3">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase block mb-1">Catatan Kualifikasi:</span>
+                  <p className="text-slate-300 leading-relaxed italic">"{selectedLead.notes}"</p>
+                </div>
+              </div>
+
+              {/* AI Conversion Prob Diagnostic Breakdown */}
+              <div className="space-y-4 bg-slate-950/80 p-4 rounded-2xl border border-slate-800">
+                <h4 className="font-bold text-xs text-[#0EA5E9] uppercase tracking-widest flex items-center gap-1">
+                  <Icons.Brain className="w-4 h-4" /> AI LEAD SCORE DIAGNOSTIC
+                </h4>
+
+                <div className="flex items-center gap-4 py-2">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#0EA5E9] to-[#14B8A6] flex items-center justify-center text-xl font-extrabold text-white">
+                    {selectedLead.score}%
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 block font-semibold">Tingkat Keyakinan Closing</span>
+                    <span className={`text-sm font-bold block ${selectedLead.score >= 85 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                      Kategori {selectedLead.classification} PROSPEK
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-3 text-[11px]">
+                  <div>
+                    <div className="flex justify-between text-slate-400 mb-1">
+                      <span>Kelengkapan Dokumen / KPR</span>
+                      <span className="text-white font-bold">90%</span>
+                    </div>
+                    <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                      <div className="h-full bg-emerald-400 rounded-full" style={{ width: '90%' }}></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-slate-400 mb-1">
+                      <span>Interaksi WhatsApp Fast Response</span>
+                      <span className="text-white font-bold">82%</span>
+                    </div>
+                    <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                      <div className="h-full bg-sky-400 rounded-full" style={{ width: '82%' }}></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-slate-400 mb-1">
+                      <span>Daya Beli (Klasifikasi Finansial)</span>
+                      <span className="text-white font-bold">75%</span>
+                    </div>
+                    <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                      <div className="h-full bg-teal-400 rounded-full" style={{ width: '75%' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Simulated Live Action Timeline inside Modal */}
+            <div className="space-y-3">
+              <h4 className="font-bold text-xs text-slate-400 uppercase tracking-widest border-b border-slate-800 pb-1">Aktivitas & Log Timeline Prospek</h4>
+              
+              <div className="space-y-2 max-h-[160px] overflow-y-auto pr-1">
+                {selectedLead.activityTimeline.map((item, idx) => (
+                  <div key={idx} className="p-2 bg-slate-950/40 border border-slate-800/80 rounded-lg text-xs flex justify-between">
+                    <span className="text-slate-300">{item.desc}</span>
+                    <span className="text-slate-500 text-[10px] whitespace-nowrap ml-4">{item.time}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Action Trigger Buttons */}
+            <div className="flex gap-2 justify-end pt-4 border-t border-slate-800 mt-6">
+              <button 
+                onClick={() => {
+                  const stages = ['Lead', 'Survey', 'Booking', 'Akad', 'Closing'];
+                  const currIdx = stages.indexOf(selectedLead.stage);
+                  if (currIdx < stages.length - 1) {
+                    handleMoveStage(selectedLead.id, stages[currIdx + 1]);
+                    setSelectedLead(prev => ({ ...prev, stage: stages[currIdx + 1] }));
+                  } else {
+                    showToast("Lead sudah berada di tahap paling akhir!", "warning");
+                  }
+                }}
+                className="px-4 py-2 bg-[#0EA5E9] hover:bg-sky-600 font-bold text-xs text-white rounded-lg transition"
+              >
+                Majukan Tahap ({selectedLead.stage})
+              </button>
+              <button 
+                onClick={() => setSelectedLead(null)}
+                className="px-4 py-2 bg-slate-950 hover:bg-slate-850 text-slate-400 rounded-lg text-xs font-semibold"
+              >
+                Tutup Detail Diagnostic
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
